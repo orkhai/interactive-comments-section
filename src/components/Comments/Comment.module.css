@@ -53,13 +53,13 @@ p {
 .plus {
   height: 1.2rem;
   width: 1.2rem;
-  background: url(../../assets/icon-plus.svg) no-repeat center;
+  background: url(../../../public/assets/icon-plus.svg) no-repeat center;
 }
 
 .minus {
   height: 1.2rem;
   width: 1.2rem;
-  background: url(../../assets/icon-minus.svg) no-repeat center;
+  background: url(../../../public/assets/icon-minus.svg) no-repeat center;
 }
 
 .reply {
@@ -67,6 +67,6 @@ p {
   font-size: 1.1rem;
   font-weight: 500;
   color: hsl(238, 40%, 52%);
-  background: url(../../assets/icon-reply.svg) no-repeat;
+  background: url(../../../public/assets/icon-reply.svg) no-repeat;
   background-position: left center;
 }
