@@ -1,0 +1,38 @@
+.add_comment {
+  margin-top: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 1rem 1rem 5rem;
+  font-size: 1.1rem;
+  font-family: inherit;
+  border: 0.07rem solid hsl(223, 19%, 93%);
+  border-radius: 0.5rem;
+  color: hsl(211, 10%, 45%);
+  outline: transparent;
+}
+
+.profile_button {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_profile {
+  height: 2.5rem;
+  width: 2.5rem;
+  background: url(../../../public/assets/avatars/image-juliusomo.png) no-repeat
+    center;
+  background-size: cover;
+}
+
+.send {
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  color: hsl(0, 0%, 100%);
+  background: hsl(238, 40%, 52%);
+  text-transform: uppercase;
+}

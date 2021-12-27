@@ -12,6 +12,7 @@ const AllComments = (props) => {
           timeStamp={comment.createdAt}
           content={comment.content}
           votes={comment.score}
+          replies={comment.replies}
         />
       ))}
     </div>
