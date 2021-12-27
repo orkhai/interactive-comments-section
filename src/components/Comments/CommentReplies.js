@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./CommentReplies.module.css";
 import Card from "../UI/Card";
 
 const CommentReplies = (props) => {
+  const [voteScore, setVoteScore] = useState(props.votes);
+
+  const upVoteComment = () => {
+    setVoteScore((prevState) => prevState + 1);
+  };
+
+  const downVoteComment = () => {
+    if (voteScore <= 0) {
+      return;
+    }
+    setVoteScore((prevState) => prevState - 1);
+  };
+
   return (
     <div className={classes.line_card}>
       <div className={classes.line}></div>
@@ -30,9 +43,12 @@ const CommentReplies = (props) => {
 
         <div className={classes.vote_reply}>
           <div className={classes.vote}>
-            <button className={classes.plus}></button>
-            <h2>{props.votes}</h2>
-            <button className={classes.minus}></button>
+            <button onClick={upVoteComment} className={classes.plus}></button>
+            <h2>{voteScore}</h2>
+            <button
+              onClick={downVoteComment}
+              className={classes.minus}
+            ></button>
           </div>
 
           {props.user === "juliusomo" ? (

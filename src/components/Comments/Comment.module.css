@@ -23,6 +23,16 @@
   font-size: 1rem;
 }
 
+.you {
+  margin-left: 0.4rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border-radius: 0.2rem;
+  background: hsl(238, 40%, 52%);
+  color: hsl(0, 0%, 100%);
+}
+
 p {
   margin-bottom: 1.2rem;
   line-height: 1.3;
@@ -63,6 +73,30 @@ p {
   background: url(../../../public/assets/icon-minus.svg) no-repeat center;
 }
 
+.delete_edit {
+  display: flex;
+}
+
+.delete {
+  padding: 0;
+  width: 4.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: hsl(358, 79%, 66%);
+  background: url(../../../public/assets/icon-delete.svg) no-repeat center;
+  background-position: left center;
+}
+
+.edit {
+  padding: 0;
+  width: 4.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: hsl(238, 40%, 52%);
+  background: url(../../../public/assets/icon-edit.svg) no-repeat center;
+  background-position: left center;
+}
+
 .reply {
   width: 5.2rem;
   font-size: 1.1rem;
@@ -70,4 +104,47 @@ p {
   color: hsl(238, 40%, 52%);
   background: url(../../../public/assets/icon-reply.svg) no-repeat;
   background-position: left center;
+}
+
+@media (max-width: 330px) {
+  .user h1 {
+    font-size: 1rem;
+  }
+
+  .you {
+    margin-left: 0.3rem;
+    padding: 0.15rem 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .delete,
+  .edit {
+    width: 4rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 313px) {
+  .user h1 {
+    font-size: 0.9rem;
+  }
+
+  p,
+  .user p {
+    font-size: 0.8rem;
+  }
+
+  .vote {
+    height: 2.2rem;
+    width: 5.4rem;
+  }
+
+  .vote h2 {
+    font-size: 0.9rem;
+  }
+
+  .reply {
+    width: 5rem;
+    font-size: 0.8rem;
+  }
 }

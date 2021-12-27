@@ -29,10 +29,22 @@ input {
 }
 
 .send {
-  padding: 0.9rem 1.5rem;
+  padding: 0.7rem 1.4rem;
   font-size: 1rem;
   border-radius: 0.4rem;
   color: hsl(0, 0%, 100%);
   background: hsl(238, 40%, 52%);
   text-transform: uppercase;
+}
+
+@media (max-width: 313px) {
+  input {
+    padding: 0.8rem 0.8rem 4rem;
+    font-size: 0.8rem;
+  }
+
+  .send {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+  }
 }

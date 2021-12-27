@@ -1,11 +1,24 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import classes from "./Comment.module.css";
 import Card from "../UI/Card";
 import CommentReplies from "./CommentReplies";
 
 const Comment = (props) => {
+  const [voteScore, setVoteScore] = useState(props.votes);
+
+  const upVoteComment = () => {
+    setVoteScore((prevState) => prevState + 1);
+  };
+
+  const downVoteComment = () => {
+    if (voteScore <= 0) {
+      return;
+    }
+    setVoteScore((prevState) => prevState - 1);
+  };
+
   return (
-    <Fragment>
+    <>
       <Card>
         <div className={classes.user}>
           <div
@@ -14,7 +27,12 @@ const Comment = (props) => {
               backgroundImage: `url(${props.image})`,
             }}
           ></div>
-          <h1>{props.title}</h1>
+          <h1>
+            {props.title}{" "}
+            {props.title === "juliusomo" && (
+              <span className={classes.you}>you</span>
+            )}
+          </h1>
           <p>{props.timeStamp}</p>
         </div>
 
@@ -22,12 +40,22 @@ const Comment = (props) => {
 
         <div className={classes.vote_reply}>
           <div className={classes.vote}>
-            <button className={classes.plus}></button>
-            <h2>{props.votes}</h2>
-            <button className={classes.minus}></button>
+            <button onClick={upVoteComment} className={classes.plus}></button>
+            <h2>{voteScore}</h2>
+            <button
+              onClick={downVoteComment}
+              className={classes.minus}
+            ></button>
           </div>
 
-          <button className={classes.reply}>Reply</button>
+          {props.title === "juliusomo" ? (
+            <div className={classes.delete_edit}>
+              <button className={classes.delete}>Delete</button>
+              <button className={classes.edit}>Edit</button>
+            </div>
+          ) : (
+            <button className={classes.reply}>Reply</button>
+          )}
         </div>
       </Card>
 
@@ -42,7 +70,7 @@ const Comment = (props) => {
           replying={reply.replyingTo}
         />
       ))}
-    </Fragment>
+    </>
   );
 };
 

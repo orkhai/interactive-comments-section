@@ -94,6 +94,10 @@ span {
   background: url(../../../public/assets/icon-minus.svg) no-repeat center;
 }
 
+.delete_edit {
+  display: flex;
+}
+
 .delete {
   padding: 0;
   width: 4.8rem;
@@ -121,4 +125,61 @@ span {
   color: hsl(238, 40%, 52%);
   background: url(../../../public/assets/icon-reply.svg) no-repeat;
   background-position: left center;
+}
+
+@media (max-width: 330px) {
+  .user h1 {
+    font-size: 0.9rem;
+  }
+
+  .user p {
+    font-size: 0.8rem;
+  }
+
+  .you {
+    margin-left: 0.3rem;
+    padding: 0.15rem 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .user_image {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .vote {
+    height: 2.5rem;
+    width: 5.7rem;
+  }
+
+  .delete,
+  .edit {
+    width: 4rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 313px) {
+  .user h1 {
+    font-size: 0.8rem;
+  }
+
+  p,
+  .user p {
+    font-size: 0.8rem;
+  }
+
+  .vote {
+    height: 2.2rem;
+    width: 5rem;
+  }
+
+  .vote h2 {
+    font-size: 0.9rem;
+  }
+
+  .reply {
+    width: 5rem;
+    font-size: 0.8rem;
+  }
 }

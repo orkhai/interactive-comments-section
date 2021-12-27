@@ -3,7 +3,7 @@ import Comment from "./Comment";
 
 const AllComments = (props) => {
   return (
-    <div>
+    <>
       {props.comments.map((comment) => (
         <Comment
           key={comment.id}
@@ -15,7 +15,7 @@ const AllComments = (props) => {
           replies={comment.replies}
         />
       ))}
-    </div>
+    </>
   );
 };
 

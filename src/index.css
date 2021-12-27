@@ -18,3 +18,15 @@ button {
   background: transparent;
   font-family: inherit;
 }
+
+@media (max-width: 360px) {
+  body {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 313px) {
+  body {
+    padding: 2rem 0.5rem;
+  }
+}
