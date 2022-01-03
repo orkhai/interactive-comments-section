@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./CommentReplies.module.css";
 import Card from "../UI/Card";
+import CommentContext from "../../store/comment-context";
+import Backdrop from "../UI/Backdrop";
 
 const CommentReplies = (props) => {
   const [voteScore, setVoteScore] = useState(props.votes);
+  const commentCtx = useContext(CommentContext);
 
   const upVoteComment = () => {
     setVoteScore((prevState) => prevState + 1);
@@ -53,7 +56,9 @@ const CommentReplies = (props) => {
 
           {props.user === "juliusomo" ? (
             <div className={classes.delete_edit}>
-              <button className={classes.delete}>Delete</button>
+              <button onClick={commentCtx.openModal} className={classes.delete}>
+                Delete
+              </button>
               <button className={classes.edit}>Edit</button>
             </div>
           ) : (
@@ -61,6 +66,25 @@ const CommentReplies = (props) => {
           )}
         </div>
       </Card>
+
+      {commentCtx.modalOpen && (
+        <>
+          <Backdrop />
+          <Card className={classes.modal}>
+            <h1>Delete comment</h1>
+            <p>
+              Are you sure you want to delete this comment? This will remove the
+              comment and can't be undone.
+            </p>
+            <div className={classes.buttons}>
+              <button onClick={commentCtx.closeModal} className={classes.no}>
+                No, Cancel
+              </button>
+              <button className={classes.yes}>Yes, Delete</button>
+            </div>
+          </Card>
+        </>
+      )}
     </div>
   );
 };

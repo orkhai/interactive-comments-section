@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./Comment.module.css";
 import Card from "../UI/Card";
 import CommentReplies from "./CommentReplies";
+import CommentContext from "../../store/comment-context";
+import Backdrop from "../UI/Backdrop";
 
 const Comment = (props) => {
   const [voteScore, setVoteScore] = useState(props.votes);
+  const commentCtx = useContext(CommentContext);
 
   const upVoteComment = () => {
     setVoteScore((prevState) => prevState + 1);
@@ -15,6 +18,14 @@ const Comment = (props) => {
       return;
     }
     setVoteScore((prevState) => prevState - 1);
+  };
+
+  const openModal = () => {
+    commentCtx.openModal();
+  };
+
+  const removeComment = () => {
+    commentCtx.deleteComment(props.id);
   };
 
   return (
@@ -50,7 +61,9 @@ const Comment = (props) => {
 
           {props.title === "juliusomo" ? (
             <div className={classes.delete_edit}>
-              <button className={classes.delete}>Delete</button>
+              <button onClick={openModal} className={classes.delete}>
+                Delete
+              </button>
               <button className={classes.edit}>Edit</button>
             </div>
           ) : (
@@ -58,6 +71,27 @@ const Comment = (props) => {
           )}
         </div>
       </Card>
+
+      {commentCtx.modalOpen && (
+        <>
+          <Backdrop />
+          <Card className={classes.modal}>
+            <h1>Delete comment</h1>
+            <p>
+              Are you sure you want to delete this comment? This will remove the
+              comment and can't be undone.
+            </p>
+            <div className={classes.buttons}>
+              <button onClick={commentCtx.closeModal} className={classes.no}>
+                No, Cancel
+              </button>
+              <button onClick={removeComment} className={classes.yes}>
+                Yes, Delete
+              </button>
+            </div>
+          </Card>
+        </>
+      )}
 
       {props.replies.map((reply) => (
         <CommentReplies

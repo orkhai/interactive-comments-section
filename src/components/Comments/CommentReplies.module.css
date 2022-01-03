@@ -127,6 +127,51 @@ span {
   background-position: left center;
 }
 
+.modal {
+  width: 92%;
+  margin: 0;
+  padding: 1.5rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.modal h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: hsl(212, 24%, 26%);
+}
+
+.modal p {
+  font-size: 1.1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.no {
+  padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  color: hsl(0, 0%, 100%);
+  background: hsl(211, 10%, 45%);
+  text-transform: uppercase;
+}
+
+.yes {
+  padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  color: hsl(0, 0%, 100%);
+  background: hsl(358, 79%, 66%);
+  text-transform: uppercase;
+}
+
 @media (max-width: 330px) {
   .user h1 {
     font-size: 0.9rem;
@@ -156,6 +201,50 @@ span {
   .edit {
     width: 4rem;
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .modal {
+    padding: 1rem;
+  }
+
+  .modal h1 {
+    font-size: 1.1rem;
+  }
+
+  .modal p {
+    font-size: 0.9rem;
+  }
+
+  .no,
+  .yes {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 313px) {
+  .user h1 {
+    margin: 0 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .user p {
+    font-size: 0.7rem;
+  }
+
+  .vote {
+    height: 2.2rem;
+    width: 5.4rem;
+  }
+
+  .vote h2 {
+    font-size: 0.9rem;
+  }
+
+  .reply {
+    width: 5rem;
+    font-size: 0.8rem;
   }
 }
 

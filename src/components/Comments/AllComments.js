@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Comment from "./Comment";
+import CommentContext from "../../store/comment-context";
 
-const AllComments = (props) => {
+const AllComments = () => {
+  const commentCtx = useContext(CommentContext);
+
   return (
     <>
-      {props.comments.map((comment) => (
+      {commentCtx.comments.map((comment) => (
         <Comment
           key={comment.id}
+          id={comment.id}
           image={comment.user.image.png}
           title={comment.user.username}
           timeStamp={comment.createdAt}

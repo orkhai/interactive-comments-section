@@ -1,16 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import CommentContext from "../../store/comment-context";
 import classes from "./NewComment.module.css";
 import Card from "../UI/Card";
-// import data from "../../data.json";
 
-const NewComment = (props) => {
+const NewComment = () => {
+  const commentCtx = useContext(CommentContext);
   const commentRef = useRef();
 
   const addComment = (e) => {
     e.preventDefault();
     const enteredComment = commentRef.current.value;
 
-    props.onAddComment(enteredComment);
+    commentCtx.addComment(enteredComment);
     commentRef.current.value = "";
   };
 
