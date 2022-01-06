@@ -11,7 +11,7 @@ const AllComments = () => {
         <Comment
           key={comment.id}
           id={comment.id}
-          image={comment.user.image.png}
+          image={comment.user.image.webp}
           title={comment.user.username}
           timeStamp={comment.createdAt}
           content={comment.content}

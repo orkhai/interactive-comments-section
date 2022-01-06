@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import classes from "./Comment.module.css";
 import Card from "../UI/Card";
 import CommentReplies from "./CommentReplies";
@@ -7,7 +7,10 @@ import Backdrop from "../UI/Backdrop";
 
 const Comment = (props) => {
   const [voteScore, setVoteScore] = useState(props.votes);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingCommentModalOpen, setEditingCommentModalOpen] = useState(false);
   const commentCtx = useContext(CommentContext);
+  const editRef = useRef();
 
   const upVoteComment = () => {
     setVoteScore((prevState) => prevState + 1);
@@ -21,11 +24,28 @@ const Comment = (props) => {
   };
 
   const openModal = () => {
-    commentCtx.openModal();
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   const removeComment = () => {
     commentCtx.deleteComment(props.id);
+    setModalOpen(false);
+  };
+
+  const editCommentToggleHandler = () => {
+    setEditingCommentModalOpen(true);
+  };
+
+  const editComment = (e) => {
+    e.preventDefault();
+
+    const editedComment = editRef.current.value;
+    commentCtx.editComment(editedComment, props.id);
+    setEditingCommentModalOpen(false);
   };
 
   return (
@@ -64,15 +84,39 @@ const Comment = (props) => {
               <button onClick={openModal} className={classes.delete}>
                 Delete
               </button>
-              <button className={classes.edit}>Edit</button>
+              <button
+                onClick={editCommentToggleHandler}
+                className={classes.edit}
+              >
+                Edit
+              </button>
             </div>
           ) : (
             <button className={classes.reply}>Reply</button>
           )}
         </div>
+
+        {editingCommentModalOpen && (
+          <div className={classes.edit_comment}>
+            <form onSubmit={editComment}>
+              <label htmlFor="commentedit" />
+              <input
+                id="commentedit"
+                type="text"
+                defaultValue={props.content}
+                ref={editRef}
+              />
+              <div className={classes.button}>
+                <button type="submit" className={classes.send}>
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </Card>
 
-      {commentCtx.modalOpen && (
+      {modalOpen && (
         <>
           <Backdrop />
           <Card className={classes.modal}>
@@ -82,7 +126,7 @@ const Comment = (props) => {
               comment and can't be undone.
             </p>
             <div className={classes.buttons}>
-              <button onClick={commentCtx.closeModal} className={classes.no}>
+              <button onClick={closeModal} className={classes.no}>
                 No, Cancel
               </button>
               <button onClick={removeComment} className={classes.yes}>

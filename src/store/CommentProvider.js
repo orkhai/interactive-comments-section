@@ -6,15 +6,34 @@ import data from "../data.json";
 const CommentProvider = (props) => {
   const [commentsList, setCommentsList] = useState(data.comments);
   const [id, setId] = useState(5);
-  const [modalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  // const replacerFunc = () => {
+  //   const visited = new WeakSet();
+  //   return (key, value) => {
+  //     if (typeof value === "object" && value !== null) {
+  //       if (visited.has(value)) {
+  //         return;
+  //       }
+  //       visited.add(value);
+  //     }
+  //     return value;
+  //   };
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // useEffect(() => {
+  //   const json = localStorage.getItem("comments");
+  //   const savedComments = JSON.parse(json);
+  //   if (savedComments) {
+  //     setCommentsList(savedComments);
+  //   }
+  //   console.log(savedComments);
+  // }, []);
+
+  // useEffect(() => {
+  //   const json = JSON.stringify(commentsList);
+  //   localStorage.setItem("comments", json);
+  //   console.log(json);
+  // }, [commentsList]);
 
   const addCommentHandler = (uComment) => {
     setId((prevState) => prevState + 1);
@@ -28,7 +47,7 @@ const CommentProvider = (props) => {
           score: 0,
           user: {
             image: {
-              png: data.currentUser.image.png,
+              webp: data.currentUser.image.webp,
             },
             username: data.currentUser.username,
           },
@@ -39,20 +58,40 @@ const CommentProvider = (props) => {
   };
 
   const deleteCommentHandler = (id) => {
-    setModalOpen(false);
     const filteredComments = commentsList.filter(
       (comment) => comment.id !== id
     );
     setCommentsList(filteredComments);
   };
 
+  const editCommentHandler = (uComment, id) => {
+    const updatedComments = commentsList.map((comment) => {
+      if (comment.id === id) {
+        return {
+          id: comment.id,
+          content: uComment,
+          createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
+          score: 0,
+          user: {
+            image: {
+              webp: data.currentUser.image.webp,
+            },
+            username: data.currentUser.username,
+          },
+          replies: [],
+        };
+      } else {
+        return comment;
+      }
+    });
+    setCommentsList(updatedComments);
+  };
+
   const commentContext = {
-    modalOpen: modalOpen,
     comments: commentsList,
-    openModal: openModal,
-    closeModal: closeModal,
     addComment: addCommentHandler,
     deleteComment: deleteCommentHandler,
+    editComment: editCommentHandler,
   };
 
   return (
