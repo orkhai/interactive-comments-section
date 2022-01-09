@@ -6,34 +6,7 @@ import data from "../data.json";
 const CommentProvider = (props) => {
   const [commentsList, setCommentsList] = useState(data.comments);
   const [id, setId] = useState(5);
-
-  // const replacerFunc = () => {
-  //   const visited = new WeakSet();
-  //   return (key, value) => {
-  //     if (typeof value === "object" && value !== null) {
-  //       if (visited.has(value)) {
-  //         return;
-  //       }
-  //       visited.add(value);
-  //     }
-  //     return value;
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   const json = localStorage.getItem("comments");
-  //   const savedComments = JSON.parse(json);
-  //   if (savedComments) {
-  //     setCommentsList(savedComments);
-  //   }
-  //   console.log(savedComments);
-  // }, []);
-
-  // useEffect(() => {
-  //   const json = JSON.stringify(commentsList);
-  //   localStorage.setItem("comments", json);
-  //   console.log(json);
-  // }, [commentsList]);
+  const [replyId, setReplyId] = useState(50);
 
   const addCommentHandler = (uComment) => {
     setId((prevState) => prevState + 1);
@@ -57,12 +30,53 @@ const CommentProvider = (props) => {
     });
   };
 
+  const addReplyHandler = (uComment, id) => {
+    const updatedReplies = commentsList.map((comment) => {
+      if (comment.id === id) {
+        return {
+          id: comment.id,
+          content: comment.content,
+          createdAt: comment.createdAt,
+          score: comment.score,
+          user: {
+            image: {
+              webp: comment.user.image.webp,
+            },
+            username: comment.user.username,
+          },
+          replies: [
+            ...comment.replies,
+            {
+              id: replyId,
+              content: uComment,
+              createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
+              score: 0,
+              replyingTo: comment.user.username,
+              user: {
+                image: {
+                  webp: data.currentUser.image.webp,
+                },
+                username: data.currentUser.username,
+              },
+            },
+          ],
+        };
+      } else {
+        return comment;
+      }
+    });
+    setCommentsList(updatedReplies);
+    setReplyId((prevState) => prevState + 1);
+  };
+
   const deleteCommentHandler = (id) => {
     const filteredComments = commentsList.filter(
       (comment) => comment.id !== id
     );
     setCommentsList(filteredComments);
   };
+
+  const deleteReplyHandler = (id) => {};
 
   const editCommentHandler = (uComment, id) => {
     const updatedComments = commentsList.map((comment) => {
@@ -71,14 +85,14 @@ const CommentProvider = (props) => {
           id: comment.id,
           content: uComment,
           createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
-          score: 0,
+          score: comment.score,
           user: {
             image: {
-              webp: data.currentUser.image.webp,
+              webp: comment.user.image.webp,
             },
-            username: data.currentUser.username,
+            username: comment.user.username,
           },
-          replies: [],
+          replies: comment.replies,
         };
       } else {
         return comment;
@@ -87,11 +101,50 @@ const CommentProvider = (props) => {
     setCommentsList(updatedComments);
   };
 
+  const editReplyHandler = (uReply, id) => {
+    const updatedComments = commentsList.map((comment) => {
+      return {
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        score: comment.score,
+        user: {
+          image: {
+            webp: comment.user.image.webp,
+          },
+          username: comment.user.username,
+        },
+        replies: comment.replies.map((reply) => {
+          if (reply.id === id) {
+            return {
+              ...reply,
+              id: reply.id,
+              content: uReply,
+              createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
+              score: reply.score,
+              replyingTo: reply.replyingTo,
+              user: {
+                image: {
+                  webp: data.currentUser.image.webp,
+                },
+                username: data.currentUser.username,
+              },
+            };
+          } else return reply;
+        }),
+      };
+    });
+    setCommentsList(updatedComments);
+  };
+
   const commentContext = {
     comments: commentsList,
     addComment: addCommentHandler,
+    addReply: addReplyHandler,
     deleteComment: deleteCommentHandler,
+    deleteReply: deleteReplyHandler,
     editComment: editCommentHandler,
+    editReply: editReplyHandler,
   };
 
   return (

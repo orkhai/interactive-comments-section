@@ -1,12 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import classes from "./CommentReplies.module.css";
 import Card from "../UI/Card";
-import CommentContext from "../../store/comment-context";
 import Backdrop from "../UI/Backdrop";
+import CommentContext from "../../store/comment-context";
 
 const CommentReplies = (props) => {
   const [voteScore, setVoteScore] = useState(props.votes);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [replyModalOpen, setReplyModalOpen] = useState(false);
   const commentCtx = useContext(CommentContext);
+  const replyRef = useRef();
 
   const upVoteComment = () => {
     setVoteScore((prevState) => prevState + 1);
@@ -17,6 +20,31 @@ const CommentReplies = (props) => {
       return;
     }
     setVoteScore((prevState) => prevState - 1);
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const removeReply = () => {
+    commentCtx.deleteReply(props.id);
+    setModalOpen(false);
+  };
+
+  const replyCommentToggleHandler = () => {
+    setReplyModalOpen(true);
+  };
+
+  const editReply = (e) => {
+    e.preventDefault();
+
+    const reply = replyRef.current.value;
+    commentCtx.editReply(reply, props.id);
+    setReplyModalOpen(false);
   };
 
   return (
@@ -56,18 +84,42 @@ const CommentReplies = (props) => {
 
           {props.user === "juliusomo" ? (
             <div className={classes.delete_edit}>
-              <button onClick={commentCtx.openModal} className={classes.delete}>
+              <button onClick={openModal} className={classes.delete}>
                 Delete
               </button>
-              <button className={classes.edit}>Edit</button>
+              <button
+                onClick={replyCommentToggleHandler}
+                className={classes.edit}
+              >
+                Edit
+              </button>
             </div>
           ) : (
             <button className={classes.reply}>Reply</button>
           )}
         </div>
+
+        {replyModalOpen && (
+          <div className={classes.edit_reply}>
+            <form onSubmit={editReply}>
+              <label htmlFor="commentreply" />
+              <input
+                id="commentreply"
+                type="text"
+                defaultValue={props.content}
+                ref={replyRef}
+              />
+              <div className={classes.button}>
+                <button type="submit" className={classes.send}>
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </Card>
 
-      {commentCtx.modalOpen && (
+      {modalOpen && (
         <>
           <Backdrop />
           <Card className={classes.modal}>
@@ -77,10 +129,12 @@ const CommentReplies = (props) => {
               comment and can't be undone.
             </p>
             <div className={classes.buttons}>
-              <button onClick={commentCtx.closeModal} className={classes.no}>
+              <button onClick={closeModal} className={classes.no}>
                 No, Cancel
               </button>
-              <button className={classes.yes}>Yes, Delete</button>
+              <button onClick={removeReply} className={classes.yes}>
+                Yes, Delete
+              </button>
             </div>
           </Card>
         </>

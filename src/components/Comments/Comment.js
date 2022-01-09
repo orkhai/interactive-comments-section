@@ -9,8 +9,10 @@ const Comment = (props) => {
   const [voteScore, setVoteScore] = useState(props.votes);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCommentModalOpen, setEditingCommentModalOpen] = useState(false);
+  const [replyModalOpen, setReplyModalOpen] = useState(false);
   const commentCtx = useContext(CommentContext);
   const editRef = useRef();
+  const replyRef = useRef();
 
   const upVoteComment = () => {
     setVoteScore((prevState) => prevState + 1);
@@ -46,6 +48,18 @@ const Comment = (props) => {
     const editedComment = editRef.current.value;
     commentCtx.editComment(editedComment, props.id);
     setEditingCommentModalOpen(false);
+  };
+
+  const replyCommentToggleHandler = () => {
+    setReplyModalOpen(true);
+  };
+
+  const addReply = (e) => {
+    e.preventDefault();
+
+    const reply = replyRef.current.value;
+    commentCtx.addReply(reply, props.id);
+    setReplyModalOpen(false);
   };
 
   return (
@@ -92,7 +106,12 @@ const Comment = (props) => {
               </button>
             </div>
           ) : (
-            <button className={classes.reply}>Reply</button>
+            <button
+              onClick={replyCommentToggleHandler}
+              className={classes.reply}
+            >
+              Reply
+            </button>
           )}
         </div>
 
@@ -107,6 +126,21 @@ const Comment = (props) => {
                 ref={editRef}
               />
               <div className={classes.button}>
+                <button type="submit" className={classes.send}>
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {replyModalOpen && (
+          <div className={classes.edit_comment}>
+            <form onSubmit={addReply}>
+              <label htmlFor="commentreply" />
+              <input id="commentreply" type="text" ref={replyRef} />
+              <div className={classes.profile_button}>
+                <div className={classes.user_profile}></div>
                 <button type="submit" className={classes.send}>
                   Send
                 </button>
@@ -140,7 +174,8 @@ const Comment = (props) => {
       {props.replies.map((reply) => (
         <CommentReplies
           key={reply.id}
-          image={reply.user.image.png}
+          id={reply.id}
+          image={reply.user.image.webp}
           user={reply.user.username}
           timeStamp={reply.createdAt}
           content={reply.content}
