@@ -27,7 +27,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: []()
+- Solution URL: [https://www.frontendmentor.io/solutions/interactive-comments-section-built-with-react-ymz0DwnXX](https://www.frontendmentor.io/solutions/interactive-comments-section-built-with-react-ymz0DwnXX)
 - Live Site URL: [https://interactive-comments-section-orkhai.vercel.app/](https://interactive-comments-section-orkhai.vercel.app/)
 
 ## My process
