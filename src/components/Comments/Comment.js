@@ -38,7 +38,7 @@ const Comment = (props) => {
     setModalOpen(false);
   };
 
-  const editCommentToggleHandler = () => {
+  const editCommentToggler = () => {
     setEditingCommentModalOpen(true);
   };
 
@@ -50,7 +50,7 @@ const Comment = (props) => {
     setEditingCommentModalOpen(false);
   };
 
-  const replyCommentToggleHandler = () => {
+  const replyCommentToggler = () => {
     setReplyModalOpen(true);
   };
 
@@ -64,7 +64,7 @@ const Comment = (props) => {
 
   return (
     <>
-      <Card>
+      <Card className={classes.comment_card}>
         <div className={classes.user}>
           <div
             className={classes.user_image}
@@ -81,7 +81,7 @@ const Comment = (props) => {
           <p>{props.timeStamp}</p>
         </div>
 
-        <p>{props.content}</p>
+        <p className={classes.content}>{props.content}</p>
 
         <div className={classes.vote_reply}>
           <div className={classes.vote}>
@@ -98,57 +98,51 @@ const Comment = (props) => {
               <button onClick={openModal} className={classes.delete}>
                 Delete
               </button>
-              <button
-                onClick={editCommentToggleHandler}
-                className={classes.edit}
-              >
+              <button onClick={editCommentToggler} className={classes.edit}>
                 Edit
               </button>
             </div>
           ) : (
-            <button
-              onClick={replyCommentToggleHandler}
-              className={classes.reply}
-            >
+            <button onClick={replyCommentToggler} className={classes.reply}>
               Reply
             </button>
           )}
         </div>
-
-        {editingCommentModalOpen && (
-          <div className={classes.edit_comment}>
-            <form onSubmit={editComment}>
-              <label htmlFor="commentedit" />
-              <input
-                id="commentedit"
-                type="text"
-                defaultValue={props.content}
-                ref={editRef}
-              />
-              <div className={classes.button}>
-                <button type="submit" className={classes.send}>
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {replyModalOpen && (
-          <div className={classes.edit_comment}>
-            <form onSubmit={addReply}>
-              <label htmlFor="commentreply" />
-              <input id="commentreply" type="text" ref={replyRef} />
-              <div className={classes.profile_button}>
-                <div className={classes.user_profile}></div>
-                <button type="submit" className={classes.send}>
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
       </Card>
+
+      {editingCommentModalOpen && (
+        <Card className={classes.edit_comment}>
+          <form onSubmit={editComment}>
+            <label htmlFor="commentedit" />
+            <input
+              id="commentedit"
+              type="text"
+              defaultValue={props.content}
+              ref={editRef}
+            />
+            <div className={classes.button}>
+              <button type="submit" className={classes.send}>
+                Update
+              </button>
+            </div>
+          </form>
+        </Card>
+      )}
+
+      {replyModalOpen && (
+        <Card className={classes.edit_comment}>
+          <form onSubmit={addReply}>
+            <label htmlFor="commentreply" />
+            <input id="commentreply" type="text" ref={replyRef} />
+            <div className={classes.profile_button}>
+              <div className={classes.user_profile}></div>
+              <button type="submit" className={classes.send}>
+                Reply
+              </button>
+            </div>
+          </form>
+        </Card>
+      )}
 
       {modalOpen && (
         <>

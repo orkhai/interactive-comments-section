@@ -76,7 +76,24 @@ const CommentProvider = (props) => {
     setCommentsList(filteredComments);
   };
 
-  const deleteReplyHandler = (id) => {};
+  const deleteReplyHandler = (id) => {
+    const updatedComments = commentsList.map((comment) => {
+      return {
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        score: comment.score,
+        user: {
+          image: {
+            webp: comment.user.image.webp,
+          },
+          username: comment.user.username,
+        },
+        replies: comment.replies.filter((reply) => reply.id !== id),
+      };
+    });
+    setCommentsList(updatedComments);
+  };
 
   const editCommentHandler = (uComment, id) => {
     const updatedComments = commentsList.map((comment) => {
@@ -84,7 +101,7 @@ const CommentProvider = (props) => {
         return {
           id: comment.id,
           content: uComment,
-          createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
+          createdAt: comment.createdAt,
           score: comment.score,
           user: {
             image: {
@@ -120,7 +137,7 @@ const CommentProvider = (props) => {
               ...reply,
               id: reply.id,
               content: uReply,
-              createdAt: <ReactTimeAgo date={new Date()} locale="en-US" />,
+              createdAt: reply.createdAt,
               score: reply.score,
               replyingTo: reply.replyingTo,
               user: {

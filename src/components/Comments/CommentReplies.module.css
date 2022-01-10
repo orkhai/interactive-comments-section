@@ -118,6 +118,11 @@ span {
   background-position: left center;
 }
 
+.delete:hover,
+.edit:hover {
+  opacity: 0.5;
+}
+
 .reply {
   width: 5.2rem;
   font-size: 1.1rem;
@@ -127,8 +132,13 @@ span {
   background-position: left center;
 }
 
+.reply:hover {
+  opacity: 0.5;
+}
+
 .modal {
   width: 92%;
+  max-width: 22rem;
   margin: 0;
   padding: 1.5rem;
   position: fixed;
@@ -146,7 +156,7 @@ span {
 }
 
 .modal p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .buttons {
@@ -187,6 +197,21 @@ span {
   outline: transparent;
 }
 
+.profile_button {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_profile {
+  height: 2.5rem;
+  width: 2.5rem;
+  background: url(../../../public/assets/avatars/image-juliusomo.png) no-repeat
+    center;
+  background-size: cover;
+}
+
 .button {
   margin-top: 0.9rem;
   text-align: center;
@@ -199,6 +224,10 @@ span {
   color: hsl(0, 0%, 100%);
   background: hsl(238, 40%, 52%);
   text-transform: uppercase;
+}
+
+.send:hover {
+  opacity: 0.5;
 }
 
 @media (max-width: 330px) {
@@ -299,5 +328,76 @@ span {
   .reply {
     width: 5rem;
     font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reply_card {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    grid-auto-rows: minmax(1rem, auto);
+  }
+
+  .vote_reply {
+    grid-column: 1/13;
+    grid-row: 1;
+    align-items: flex-start;
+  }
+
+  .vote {
+    grid-column: 1;
+    grid-row: 1;
+    height: 5.6rem;
+    width: 2.2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user {
+    margin-bottom: 2rem;
+    grid-column: 2/10;
+    grid-row: 1;
+  }
+
+  .user_image {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .reply {
+    margin-top: 1rem;
+  }
+
+  .content {
+    margin: -2.5rem 0 0;
+    font-size: 0.9rem;
+    grid-column: 2/13;
+    grid-row: 2;
+  }
+
+  .edit_reply {
+    margin-top: -0.5rem;
+  }
+
+  .edit_reply form {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    grid-auto-rows: minmax(1rem, auto);
+  }
+
+  .edit_reply input {
+    grid-column: 2/11;
+    grid-row: 1;
+    z-index: 2;
+  }
+
+  .profile_button {
+    margin: 0;
+    grid-column: 1/13;
+    grid-row: 1;
+    align-items: flex-start;
   }
 }

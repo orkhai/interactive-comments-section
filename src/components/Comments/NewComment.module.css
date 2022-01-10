@@ -10,7 +10,7 @@
   border: 0.07rem solid hsl(223, 19%, 93%);
   border-radius: 0.5rem;
   color: hsl(211, 10%, 45%);
-  outline: transparent;
+  outline-color: hsl(238, 40%, 52%);
 }
 
 .profile_button {
@@ -37,8 +37,12 @@
   text-transform: uppercase;
 }
 
+.send:hover {
+  opacity: 0.5;
+}
+
 @media (max-width: 313px) {
-  input {
+  .add_comment input {
     padding: 0.8rem 0.8rem 4rem;
     font-size: 0.8rem;
   }
